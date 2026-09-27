@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>User Signup</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <!-- My Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+
+        <a class="navbar-brand" href="storefront.html">Tan's Website</a>
+
+        <div class="navbar-nav">
+            <a class="nav-link" href="storefront.html">Home</a>
+            <a class="nav-link" href="#">About Us</a>
+            <a class="nav-link" href="#">Images</a>
+            <a class="nav-link" href="#">Contact</a>
+            <a class="nav-link" href="signup.html">Sign Up</a>
+        </div>
+
+    </div>
+</nav>
+
+<div class="container my-5">
+
+    <h1>User Signup</h1>
+
+    <!-- onsubmit checks every field before the form is submitted -->
+    <form id="signupForm" onsubmit="return validateForm()" novalidate>
+
+        <div class="mb-3">
+            <label for="username" class="form-label">Username:</label>
+
+            <input type="text"
+                   class="form-control"
+                   id="username"
+                   placeholder="Enter username"
+                   onfocusout="validate(this)">
+
+            <small id="usernameError" class="text-danger"></small>
+        </div>
+
+
+        <div class="mb-3">
+            <label for="email" class="form-label">Email:</label>
+
+            <input type="email"
+                   class="form-control"
+                   id="email"
+                   placeholder="Enter email"
+                   onfocusout="validate(this)">
+
+            <small id="emailError" class="text-danger"></small>
+        </div>
+
+
+        <div class="mb-3">
+            <label for="password" class="form-label">Password:</label>
+
+            <input type="password"
+                   class="form-control"
+                   id="password"
+                   placeholder="Enter password"
+                   onfocusout="validate(this)">
+
+            <small id="passwordError" class="text-danger"></small>
+        </div>
+
+
+        <div class="mb-3">
+            <label for="confirmPassword" class="form-label">
+                Confirm Password:
+            </label>
+
+            <input type="password"
+                   class="form-control"
+                   id="confirmPassword"
+                   placeholder="Confirm password"
+                   onfocusout="validate(this)">
+
+            <small id="confirmPasswordError" class="text-danger"></small>
+        </div>
+
+
+        <button type="submit" class="btn btn-primary">
+            Sign Up
+        </button>
+
+    </form>
+
+</div>
+
+<footer class="bg-dark text-white text-center p-3">
+    <p class="mb-0">&copy; 2026 Tan. All Rights Reserved.</p>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+
+<script>
+    // This function checks one field at a time.
+    function validate(obj) {
+        let value = obj.value.trim();
+        let error = document.getElementById(obj.id + "Error");
+
+        // Start by clearing the old error.
+        error.innerHTML = "";
+        obj.style.color = "";
+        obj.style.borderColor = "";
+
+        // Check if the field is empty.
+        if (value === "") {
+            error.innerHTML = "Field is required";
+            obj.style.color = "red";
+            obj.style.borderColor = "red";
+            return false;
+        }
+
+        // Check the email format.
+        if (obj.id === "email") {
+            let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (!emailPattern.test(value)) {
+                error.innerHTML = "Please enter a valid email address";
+                obj.style.color = "red";
+                obj.style.borderColor = "red";
+                return false;
+            }
+        }
+
+        // Check that Confirm Password matches Password.
+        if (obj.id === "confirmPassword") {
+            let password = document.getElementById("password").value;
+
+            if (value !== password) {
+                error.innerHTML = "Passwords do not match";
+                obj.style.color = "red";
+                obj.style.borderColor = "red";
+                return false;
+            }
+        }
+
+        // If the field is valid, reset it to normal.
+        obj.style.color = "";
+        obj.style.borderColor = "";
+        return true;
+    }
+
+
+    // This function checks every field when Sign Up is clicked.
+    function validateForm() {
+        let username = document.getElementById("username");
+        let email = document.getElementById("email");
+        let password = document.getElementById("password");
+        let confirmPassword = document.getElementById("confirmPassword");
+
+        let usernameValid = validate(username);
+        let emailValid = validate(email);
+        let passwordValid = validate(password);
+        let confirmPasswordValid = validate(confirmPassword);
+
+        // Only submit if every field is valid.
+        if (usernameValid && emailValid && passwordValid && confirmPasswordValid) {
+            alert("Signup form is valid!");
+            return true;
+        }
+
+        return false;
+    }
+</script>
+
+</body>
+</html>
